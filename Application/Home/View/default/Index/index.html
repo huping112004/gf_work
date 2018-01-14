@@ -1,0 +1,113 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <div class="wrap div_bg" style="">
+        <div class="container">
+            <div class="content">
+                <include file="Public/header"/>
+                <div class="from_login">
+                    <form class="login-form" action="__SELF__" method="post">
+                        <div class="control-group">
+
+                            <h2 style="font-size: 30px;color: #d10f34; font:bold">
+                                <家化礼包选择>
+                            </h2>
+                        </div>
+                        <div class="control-group" style="margin-top: 32px">
+
+                            <div class="controls">
+
+                                <img src="__LAYOUT_STATIC__/images/tao-text.jpg">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+
+                                <img src="__LAYOUT_STATIC__/images/bao1.jpg">
+                            </div>
+                            <div class="controls">
+                                <a href="javascript:void(0)" onclick="getTaocan(1)">
+                                    <img src="__LAYOUT_STATIC__/images/tao-button.jpg">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <img src="__LAYOUT_STATIC__/images/line.jpg?v=1">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+
+                                <img src="__LAYOUT_STATIC__/images/bao2.jpg">
+                            </div>
+                        </div>
+                        <div class="controls" style="margin-bottom: 150px;">
+
+                            <a href="javascript:void(0)" onclick="getTaocan(2)">
+                                <img src="__LAYOUT_STATIC__/images/tao-button.jpg">
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <include file="Public/footer"/>
+
+            </div>
+
+        </div>
+    </div>
+    <include file="Public/popdiv"/>
+    <script type="text/javascript">
+
+        $(document)
+            .ajaxStart(function () {
+                $("button:submit").addClass("log-in").attr("disabled", true);
+            })
+            .ajaxStop(function () {
+                $("button:submit").removeClass("log-in").attr("disabled", false);
+            });
+
+
+        function getTaocan(product_id) {
+
+            $.ajax({
+                //提交数据的类型 POST GET
+                type: "post",
+                //提交的网址
+                url: '__APP__/Index/chekStock',
+                //提交的数据
+                data: {product_id: product_id},
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                //成功返回之后调用的函数
+                success: function (data) {
+                    if (data.msg_code == 1001 || data.msg_code == 1002 || data.msg_code == 1003) {
+                        popBox("__LAYOUT_STATIC__/images/" + data.msg + ".jpg");
+                    } else if (data.msg_code == 200) {
+                        location.href = "__APP__/Index/confrim/product_id/" + product_id;
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        $(window).load(function () {
+
+            $(".header img").addClass("img-responsive center-block");
+
+        })
+    </script>
+    <style type="text/css">
+        input::-ms-input-placeholder {
+            text-align: center;
+        }
+
+        input::-webkit-input-placeholder {
+            text-align: center;
+        }
+    </style>
+
+</block>

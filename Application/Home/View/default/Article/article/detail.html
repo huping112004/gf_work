@@ -1,0 +1,112 @@
+<extend name="Base/common"/>
+
+<block name="body">
+  <style>
+
+	#filters{
+		margin:0px 0px 40px -40px;
+	}
+  </style>
+
+  <!--page-->
+  
+    
+    <div class="container wrapper">
+    <div class="inner_content">
+      <div class="row pad30">
+      
+      <div class="col-md-9 pad25">
+        <div class="post">
+        <div class="row">
+        <div class="col-md-12">
+           <h1 class="post_link pad5" >{$info.title}</h1>
+            <p class="info" style="border-bottom:1px solid #ccc;"><span class="colorless">作者：{$author_arr.user_name}</span><span class="colorless" style="margin-left:10px;">{$info.create_time|date='Y-m-d',###}</span></p>
+          <div class="clear"></div>
+          <php> echo stripslashes(htmlspecialchars_decode($info["content"],ENT_QUOTES)); </php>
+        
+
+        </div>
+          <p class="pad5">
+            <article:prev name="prev" info="info">
+              <a href="{:U('?id='.$prev['id'])}" class="btn btn-primary btn-custom"><i class="fa  white"><img src="__LAYOUT_STATIC__/img/pre.png"  style="margin-top:-3px;"/></i> 上一篇</a> 
+            </article:prev>
+            <article:next name="next" info="info">
+              <a href="{:U('?id='.$next['id'])}" class="btn btn-primary btn-custom"><i class="fa white"><img src="__LAYOUT_STATIC__/img/next.png" style="margin-top:-3px;" /></i> 下一篇</a>
+            </article:next>  
+           </p>
+             </div>
+      </div>
+      <!--end post-->
+      
+    <!--author box-->
+      <div class="pad15"></div>
+      <div class="well">
+      <img src="{$author_arr.user_avatar|get_cover_url}" class="pull-left img-rounded pad_author" alt="" width="80" height="80" />
+      <h3>{$author_arr.user_name}</h3>
+      <p>
+        {$author_arr.user_description}
+      </p>
+      </div>
+        
+    <!--related posts-->
+        <include file="Public/new_case"/>
+      </div>
+      
+      <!--sidebar-->
+        <div class="sidebar col-md-3">
+           <h3 class="pad15">新闻分类</h3>
+            <ul class="fa-ul">
+              <foreach name="categorys" item="vo">
+                <li><i class="fa-li fa fa-caret-right grey2"></i><a href="{:U('Index/news?category_id='.$vo['id'])}">{$vo.title}</a></li>
+              </foreach>
+            </ul>
+            <div class="pad25"></div>
+                <h4 class="pad25">最新动态</h4>
+                <ul class="media-list">
+      
+                  <foreach name="new_lists" item="vo">
+                    <li class="media">
+                      <php>if(empty($vo["user_name"])){</php>
+                          <img class="img-rounded pull-left" src="__LAYOUT_STATIC__/avatars/default.jpg" alt="" height="42" width="42">
+                        <php>}else{</php>
+                          <img class="img-rounded pull-left" src="{$vo.user_avatar|get_cover_url}" alt="" height="42" width="42">
+                      <php>}</php>  
+                      <div class="media-body">
+                      <small class="muted">{$vo.create_time|date='Y/m/d',###}</small><br>
+                       <a href="{:U('Article/detail?id='.$vo['id'])}">{$vo.title}</a></div>
+                    </li>
+                  </foreach>  
+                    
+                </ul>
+                
+                <!--<h4 class="pad25">Flickr Feed</h4> -->
+                <div class="inner_content">
+                    
+                  <div id="options"> 
+                   <h3 class="pad15">标签</h3>                                       
+                      <ul id="filters" class="option-set" data-option-key="filter">
+                         <!-- <li><a href="#filter" data-option-value="*" class=" selected">ERP</a> </li> -->
+                         	<volist id='vo' name='newtag'>	
+                          	<li><a href="{:U('Index/news?tagname='.$vo['tagname'])}" data-option-value=".category01">{$vo.tagname}</a> </li> 
+                          </volist>                                           
+
+                      </ul>                                           
+                      <div class="clear"></div>
+                  </div>
+                
+                </div> 
+            </div>
+        <div class="pad45"></div>
+      </div>
+    </div>
+  </div>
+  <div class="pad45 hidden-md hidden-lg"></div>
+  <!--footer-->
+    
+          <!-- up to top -->
+        <a href="#"><i class="go-top hidden-phone hidden-tablet fa fa-angle-double-up"></i></a>
+        <!--//end--> 
+
+<!-- scripts -->
+
+</block>

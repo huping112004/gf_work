@@ -1,0 +1,124 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <div class="wrap div_bg" style="">
+        <div class="container">
+            <div class="content">
+                <include file="Public/header"/>
+                <div class="from_login">
+                    <form class="login-form" action="__SELF__" method="post">
+                        <div class="control-group">
+
+                            <h2 style="font-size: 20px;color: #d10f34;">
+                                <填写登录信息>
+                            </h2>
+                        </div>
+                        <div class="control-group" style="margin-top:44px;">
+
+                            <div class="controls">
+                                <input type="text" id="job_number" class="span3 input_bg" placeholder="请输入您的工号" value=""
+                                       name="job_number">
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top:44px;">
+
+                            <div class="controls">
+                                <input type="text" id="mobile" class="span3 input_bg" placeholder="请输入您的手机号码"
+                                       name="mobile">
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top:44px;">
+
+                            <div class="controls">
+                                <input type="text" id="id_card" class="span3 input_bg" placeholder="请输入您的身份证后4位"
+                                       errormsg="请填写5位验证码" nullmsg="请填写验证码" name="id_card">
+                            </div>
+                        </div>
+
+                        <div class="control-group" style="margin-top:35px;">
+                            <div class="controls">
+
+                                <img type="submit" class="btn" src="__LAYOUT_STATIC__/images/b1.png">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+
+                                <img src="__LAYOUT_STATIC__/images/rule.jpg">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <include file="Public/footer"/>
+
+            </div>
+
+        </div>
+    </div>
+    <include file="Public/popdiv"/>
+    <script type="text/javascript">
+
+        $(document)
+            .ajaxStart(function () {
+                $("button:submit").addClass("log-in").attr("disabled", true);
+            })
+            .ajaxStop(function () {
+                $("button:submit").removeClass("log-in").attr("disabled", false);
+            });
+
+
+        $(".btn").click(function () {
+            if ($("#job_number").val() == "") {
+                popBox("__LAYOUT_STATIC__/images/job_number.jpg");
+                return false;
+            }
+            if ($("#mobile").val() == "") {
+                popBox("__LAYOUT_STATIC__/images/mobile.jpg");
+                return false;
+            }
+            if ($("#id_card").val() == "") {
+                popBox("__LAYOUT_STATIC__/images/id_card.jpg");
+                return false;
+            }
+            var self = $(this);
+            //$.post(self.attr("action"), self.serialize(), success, "json");
+
+            $.ajax({
+                //提交数据的类型 POST GET
+                type:"post",
+                //提交的网址
+                url:self.attr("action"),
+                //提交的数据
+                data:{job_number:$("#job_number").val(),mobile:$("#mobile").val(),id_card:$("#id_card").val()},
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                //成功返回之后调用的函数
+                success: function (data){
+                    if(data.msg_code!=200){
+                        popBox("__LAYOUT_STATIC__/images/"+data.msg_en+".jpg");
+                    }else{
+                        location.href="__APP__/Index/index";
+                    }
+                }
+            });
+
+
+        });
+        $(window).load(function(){
+
+            $(".header img").addClass("img-responsive center-block");
+
+        })
+    </script>
+    <style type="text/css">
+        input::-ms-input-placeholder {
+            text-align: center;
+        }
+
+        input::-webkit-input-placeholder {
+            text-align: center;
+        }
+    </style>
+
+</block>

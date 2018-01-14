@@ -1,0 +1,38 @@
+<div id="popLayer">
+
+</div>
+<div id="popBox">
+
+    <div style="background-color:#fff;">
+        <div style="float:right; margin-top: 20px;margin-right: 16px; ">
+            <a href="javascript:void(0)" onclick="closeBox()">
+                <img src="__LAYOUT_STATIC__/images/close.jpg">
+            </a>
+        </div>
+        <div id="result_image">
+            <img src="__LAYOUT_STATIC__/images/job_number.jpg">
+        </div>
+    </div>
+</div>
+<script>
+    function popBox(image_url) {
+        $("#result_image").find('img').attr("src",image_url);
+        var popBox = document.getElementById('popBox');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.width = document.body.scrollWidth + "px";
+        popLayer.style.height = document.body.scrollHeight + "px";
+
+        popLayer.style.display = "block";
+        popBox.style.display = "block";
+    }//end func popBox()
+
+    function closeBox() {
+        var popBox = document.getElementById('popBox');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "none";
+        popBox.style.display = "none";
+
+    }
+</script>

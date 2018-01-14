@@ -1,0 +1,28 @@
+<?php
+echo dirname(__FILE__);
+function redir($dir, &$data) {
+	$b = opendir($dir);
+	while($a = readdir($b)) {
+		if($a!="." && $a!="..") {
+			 if(is_dir($dir.'/'.$a)) {
+			 	//echo $dir.'/'.$a;die;
+			 	redir($dir.'/'.$a, $data);
+				$data[] = $dir.'/'.$a;
+				rmdir($dir.'/'.$a);
+			 } else {
+			 	 $data[] = $dir.'/'.$a;
+				 unlink($dir.'/'.$a);
+			 }
+			 
+		}
+	}
+	rmdir($dir);
+}
+$data = array();
+define('SITE_PATH', getcwd());//网站当前路径
+
+
+redir(SITE_PATH . "/Cache/Runtime/Home/", $data);
+echo 'clear ok！';
+//print_r($data);
+?>

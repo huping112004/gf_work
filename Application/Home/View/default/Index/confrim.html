@@ -1,0 +1,225 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <div class="wrap div_bg" style="">
+        <div class="container">
+            <div class="content">
+                <include file="Public/header"/>
+                <div class="from_login">
+                    <form class="login-form" action="__SELF__" method="post">
+                        <div class="control-group">
+
+                            <h2 style="font-size: 30px;color: #d10f34; font:bold">
+                                <填写收货地址>
+                            </h2>
+                        </div>
+                        <div class="control-group" style="margin-top: 32px">
+
+                            <div class="controls">
+
+                                <img src="__LAYOUT_STATIC__/images/tao-text.jpg">
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top:44px;">
+                            <label class="confrim_label">收货人姓名</label>
+                            <div class="controls">
+                                <input type="text" id="consignee" class="span3 confrim_input" placeholder="" value=""
+                                       name="consignee">
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top:39px;">
+                            <label class="confrim_label">收货人地址</label>
+                            <div class="controls" style="margin-left: 35%;">
+                                <div class="toggle-{$field.name}"
+                                     style="width: 110px;float: left;border: 1px solid #717574;">
+                                    <select data-toggle="select" class="form-control" name="province_id" id="province_id"
+                                            style="height: 44px; margin-right: 8px;"
+                                            child="city_id,state_id" onchange="areaChangeCallback(this);">
+                                        <option value="">请选择省</option>
+                                    </select>
+                                </div>
+                                <div class="form-item cf toggle-{$field.name}"
+                                     style="width: 110px;float: left;border: 1px solid #717574; margin-right: 5px; margin-left: 5px;">
+                                    <select data-toggle="select" class="form-control" name="city_id" child="state_id"
+                                            style="height: 44px;" parent="province_id" onchange="areaChangeCallback(this);" id="city_id">
+                                        <option value="">请选择城市</option>
+                                    </select>
+                                </div>
+                                <div class="form-item cf toggle-{$field.name}"
+                                     style="width: 110px;border: 1px solid #717574; float: left">
+                                    <select data-toggle="select" class="form-control" name="state_id" parent="city_id"
+                                            style="height: 44px;" id="state_id">
+                                        <option value="">区/县</option>
+                                    </select>
+
+                                </div>
+                                <span style="margin-right: 48%">
+                                    <input type="text" id="address" class="" value=""
+                                           style="border: 1px solid #717574; height: 44px" name="address">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top:39px;">
+                            <label class="confrim_label">联系方式</label>
+                            <div class="controls">
+                                <input type="text" id="mobile" class="span3 confrim_input" placeholder=""
+                                       value=""
+                                       name="mobile">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 170px;margin-top: 70px;">
+                            <div class="control-group" style="width:500px;margin:0 auto;">
+                                <div style="float: left;margin-left: 60px;">
+
+                                    <a href="javascript:void(0) " onclick="confrim()">
+                                        <img src="__LAYOUT_STATIC__/images/confrim_ok.jpg">
+                                    </a>
+                                </div>
+                                <div class="controls">
+                                    <a href="javascript:void(0)" onclick="history.go(-1)">
+                                        <img src="__LAYOUT_STATIC__/images/back.jpg">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+                <input type="hidden" id="product_id" class="span3 confrim_input" placeholder="" value="{$product_id}" name="product_id">
+                </form>
+            </div>
+
+            <include file="Public/footer"/>
+
+        </div>
+
+    </div>
+    </div>
+    <include file="Public/popdiv"/>
+    <div id="confrim_info" style="display: none">
+        <div style="width:500px;margin:0 auto;height: 400px;padding-top: 60px;padding-left: 60px" >
+            <div class="controls" >
+                <img src="__LAYOUT_STATIC__/images/confrim_pop.jpg">
+            </div>
+            <div class="controls" style="width: 360px; height: 165px;border: 1px solid #ce0201;margin-bottom:20px; ">
+                <div class="control-group" style="margin-left: 9px; margin-top: 20px;">
+                    <label class="confrim_text" >*收货人：</label>
+                    <span id="confrim_consignee">张大大</span>
+                </div>
+                <div class="control-group" style="margin-left: 9px;margin-top: 10px; ">
+                    <label class="confrim_text" >*联系方式：</label>
+                    <span id="confrim_moblie">13564608859</span>
+                </div>
+                <div class="control-group" style="margin-left: 9px; margin-top: 10px;">
+                    <label class="confrim_text">*收货人：</label>
+                    <span id="confrim_address">张大大张大大张大大张大大张大大张大大张大大张大大张大大张大大张大大张大大张大大张大</span>
+                </div>
+            </div>
+            <div class="control-group" style="margin:0 auto;">
+                <div style="float: left;margin-left: 80px;margin-right: 20px;">
+
+                    <button class="button" onclick="save()">确认提交</button>
+                </div>
+                <div class="controls">
+                    <button class="button" onclick="closeBox()">返回上一页</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document)
+            .ajaxStart(function () {
+                $("button:submit").addClass("log-in").attr("disabled", true);
+            })
+            .ajaxStop(function () {
+                $("button:submit").removeClass("log-in").attr("disabled", false);
+            });
+
+        function confrim() {
+            if($("#consignee").val()==''){
+                alert('请填写收货人');
+                return false;
+            }
+            if($("#address").val()==''){
+                alert('请填写地址');
+                return false;
+            }
+            if($("#mobile").val()==''){
+                alert('请填写联系方式');
+                return false;
+            }
+
+            $("#confrim_consignee").html($("#consignee").val());
+            $("#confrim_moblie").html($("#mobile").val());
+            var province =  $("#province_id").find("option:selected").text();
+            var city =  $("#city_id").find("option:selected").text();
+            var state =  $("#state_id").find("option:selected").text();
+            var address =  $("#address").val();
+            $("#confrim_address").html(province+city+state+address);
+            $("#result_image").html($("#confrim_info").html());
+            var popBox = document.getElementById('popBox');
+            var popLayer = document.getElementById('popLayer');
+
+            popLayer.style.width = document.body.scrollWidth + "px";
+            popLayer.style.height = document.body.scrollHeight + "px";
+
+            popLayer.style.display = "block";
+            popBox.style.display = "block";
+        }
+
+        function save() {
+
+
+            $.ajax({
+                //提交数据的类型 POST GET
+                type: "post",
+                //提交的网址
+                url: '__APP__/Index/saveOrder',
+                //提交的数据
+                data: {product_id: $("#product_id").val(),consignee:$("#consignee").val(),mobile:$("#mobile").val(),address:$("#address").val(),province:$("#province_id").find("option:selected").text(),city:$("#city_id").find("option:selected").text(),state:$("#state_id").find("option:selected").text()},
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                //成功返回之后调用的函数
+                success: function (data) {
+                    if (data.msg_code == 1001 || data.msg_code == 1002 || data.msg_code == 1003 || data.msg_code == 200) {
+                        $("#result_image").html('<img src="__LAYOUT_STATIC__/images/job_number.jpg">');
+                        popBox("__LAYOUT_STATIC__/images/" + data.msg + ".jpg");
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        $(window).load(function () {
+
+            $(".header img").addClass("img-responsive center-block");
+
+
+        })
+
+    </script>
+    <style type="text/css">
+        .button {
+            background-color: #ce0201; /* Green */
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="/Public/layouts/js/area_select.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            createAreaSelect('province_id', 0, 0);
+
+        });
+    </script>
+</block>

@@ -1,0 +1,185 @@
+<extend name="Base/common"/>
+
+<block name="body">
+
+<style>
+    #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+    #golist {display: none;}
+    @media (max-device-width: 780px){#golist{display: block !important;}}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=h9tnSylNx2757WXy2ebTlqNr"></script>
+<script src="__LAYOUT_STATIC__/js/jquery.blockUI.js"></script> 
+<script src="__LAYOUT_STATIC__/js/main.js"></script>  
+   <div class="wrap">
+      <div class="container">
+        <div class="content">
+          <include file="Public/header"/>
+          <div class="kv">
+            <img src="__LAYOUT_STATIC__/images/map_kv.jpg">
+          </div>
+          <div class="map-main">
+            <div class="bd">
+              <div id="allmap" style="height: 400px;">
+                <img src="__LAYOUT_STATIC__/images/map_top.jpg" class="map-top">
+              </div>
+              <div class="map-form">
+                <form role="form" action="{:U('Index/map',array('action'=>'search'))}" method="post">
+                  <div class="title clearfix">
+                    <span class="pull-left">学校筛选</span>
+                    <a href="http://wap.colorwayoflove.com.cn/Collect/index.html" class="pull-right"></a>
+                  </div>
+                  <div class="form-group">
+                    <select name="province_id" child="city_id,state_id" onchange="areaChangeCallback(this);">
+                      <option value="">请选择省份</option>
+                    </select>
+                    <img src="__LAYOUT_STATIC__/images/sel_down.jpg" class="sel-down">
+                  </div>
+                  <div class="form-group">
+                    <select name="city_id" child="state_id" parent="province_id" onchange="areaChangeCallback(this);">
+                      <option value="">请选择城市</option>
+                      
+                    </select>
+                    <img src="__LAYOUT_STATIC__/images/sel_down.jpg" class="sel-down">
+                  </div>
+                  <div class="form-group district">
+                    <select  class="form-control" name="state_id" parent="city_id">
+                      <option>区/县</option>
+                      <option>徐汇</option>
+                    </select>
+                    <img src="__LAYOUT_STATIC__/images/sel_down.jpg" class="sel-down">
+                  </div>
+                  <button type="submit" class="submit">确认筛选</button>
+                  <a class="btn" id="near" href="javascript:loadJScript()" style="padding:13px 12px">离我最近的学校</a>
+                </form>
+                <ul style="margin-top: 26px;font-size: 28px;text-align: center;">
+                <php>if($_REQUEST['action'] == 'search'){</php>
+                  <php>foreach($lists as $arr){
+                  	   $url = U('Index/show_brushing',array('bid'=>$arr["id"])); 
+                  </php>
+                    <li><a href="<php>echo $url;</php>">{$arr.title}</a></li>
+                  <php>}</php>
+                <php>}</php>  
+                </ul>  
+              </div>
+            </div>
+          </div>
+          <include file="Public/footer"/>
+        </div>
+        <include file="Public/slide_nav"/>
+      </div>
+    </div>
+    <script type="text/javascript">
+     // 百度地图API功能  
+      var app ="__APP__";
+      var public = "__LAYOUT_STATIC__";
+      map = new BMap.Map("allmap");
+      <php>if(empty($lan_arr)){</php>
+        map.centerAndZoom(new BMap.Point(116.417854,39.921988), 5);
+      <php>}else{</php>
+        map.centerAndZoom(new BMap.Point(<php>echo $lan_arr["lng"];</php>,<php>echo $lan_arr["lat"];</php>), 11);
+      <php>}</php>    
+       /*var data_info = [[116.417854,39.921988,sContent,"test1"],
+                       [116.406605,39.921585,sContent1,"test2"],
+                       [116.412222,39.912345,sContent2,"test3"]
+                      ];*/  
+      <php>if($lists){</php>                
+        var data_info = [<php>
+          $cout_num = count($lists);
+          $i = 1;
+          foreach($lists as $row){
+            $url = U('Index/show_brushing',array('bid'=>$row["id"]));   
+            echo '['.$row[longitude].",".$row[latitude].",'<a href=\'".$url."\'><img src=".get_cover_url($row[after_img])."></a><br><br><br>查看详情','".$row[title]."']"; 
+            if($i<$cout_num){
+              echo ",";
+            }
+            $i++;
+          }
+         </php>];
+      <php>}else{</php>    
+        var data_info ='';
+      <php>}</php>    
+       
+         //开启鼠标滚轮缩放
+      var opts = {
+            width : 200,     // 信息窗口宽度
+            height: 180,     // 信息窗口高度
+            title : "信息窗口" , // 信息窗口标题
+            enableMessage:true//设置允许信息窗发送短息
+           };
+      var icon_path = "__LAYOUT_STATIC__/images/address_icon.png";
+      //var icon = new BMap.Icon(icon_path, new BMap.Size(20, 32), {
+      var icon = new BMap.Icon(icon_path, new BMap.Size(49, 20), {
+        //anchor: new BMap.Size(20, 60),
+        anchor: new BMap.Size(10, 30),
+        infoWindowAnchor: new BMap.Size(20, 0)
+      });//设置标记图片
+      var marker = null;
+           
+      for(var i=0;i<data_info.length;i++){
+        //var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]));  // 创建标注
+        if(icon_path != ""){
+           marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]), {icon:icon}); //创建自定义marker对象
+        }else{
+           marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1])); //创建marker对象
+        } 
+        var content = data_info[i][2];
+        var title = data_info[i][3];
+        map.addOverlay(marker);               // 将标注添加到地图中
+        addClickHandler(content,marker,title);
+      }
+      function addClickHandler(content,marker,title){
+        marker.addEventListener("click",function(e){
+          openInfo(content,e,title)}
+        );
+      }
+      function openInfo(content,e,title){
+       // content = content + ;
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        opts.title = title;
+        var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+      }
+    </script>
+
+
+
+    <script src="/Public/layouts/js/area_select.js"></script>
+    <script type="text/javascript">
+      $(function (){
+        
+        createAreaSelect('province_id', 0, <php>echo $_REQUEST[province_id]>0?$_REQUEST[province_id]:0;</php>);
+        createAreaSelect('city_id', <php>echo $_REQUEST[province_id]>0?$_REQUEST[province_id]:0;</php>, 0);
+
+  
+      });
+      function loadJScript() {
+        blocktheui();
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "http://api.map.baidu.com/api?v=2.0&ak=h9tnSylNx2757WXy2ebTlqNr&callback=init";
+        document.body.appendChild(script);
+      }
+      function init() {
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+          //  map.addOverlay(mk);
+            //map.panTo(r.point);
+            //alert('您的位置：'+r.point.lng+','+r.point.lat);
+            //location.href = '{:U("Index/do_near",array("longitude"=>'+r.point.lng+'))}';
+            
+            near(r.point.lng,r.point.lat);
+          }
+          else {
+            alert('failed'+this.getStatus());
+          }        
+        },
+          {enableHighAccuracy: true})               //启用滚轮放大缩小
+        }  
+        //window.onload = loadJScript;  //异步加载地图
+   
+    </script>
+
+</block>

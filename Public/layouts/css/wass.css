@@ -1,0 +1,93 @@
+body {
+  overflow-x: hidden;
+
+  width: 100%;
+}
+
+p {
+  margin: 0; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  padding: 0; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both; }
+
+.wrap {
+  width: 100%;
+  overflow: hidden; }
+.header-banner {
+  height: 1053px;
+  background: url(../images/top.jpg) no-repeat center center ;
+}
+.container {
+  transition: transform .4s ease;
+  -webkit-transition: -webkit-transform .4s ease;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  font-family: "Heiti SC","Microsoft YaHei",sans-serif; }
+
+.from_login{
+  margin-top: 150px;
+
+  text-align: center;
+}
+.div_bg{
+  background-image:url(../images/bg.jpg);
+}
+.input_bg{
+   background:url(../images/b2.png); width:394px;border:0;height:51px;line-height:51px;
+  padding-left: 10px;margin-left:10px;
+ }
+.jd_number{
+  background:url(../images/jd_number.jpg);
+}
+#popBox{
+  position: absolute;
+  display:none;
+  width:500px;
+  height:400px;
+  left:40%;
+  top:50%;
+  z-index:11;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin: auto;
+  background:#fffff;
+}
+
+#popLayer{
+  position: absolute;
+  display:none;
+  left:0;
+  top:0;
+  z-index:10;
+  background:#DCDBDC;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+}
+
+.confrim_label{
+  font-size: 16px;color: #d10f34; font:bold;width:500px;text-align: left;margin-left: 43px;line-height: 35px;
+}
+.confrim_input{
+  width: 454px;height: 44px;border: 1px solid #717574;
+}
+.confrim_text{
+  color: #ce0201; font:bold;
+}
+/*# sourceMappingURL=wass.css.map */

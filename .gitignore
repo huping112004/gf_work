@@ -1,0 +1,12 @@
+Runtime/
+Uploads/
+Data/
+index.php
+Application/Common/Conf/config.php
+Application/User/Conf/*.php
+Application/Home/Conf/*.php
+Application/Zh/Conf/*.php
+Application/Admin/Conf/*.php
+Application/Html/
+doc/
+Attach/

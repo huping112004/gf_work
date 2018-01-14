@@ -1,0 +1,10 @@
+<?php if($allow_blank): ?>
+  <option value=''>{$blank_name}</option>
+<?php endif; ?>
+<volist name="areas" id="area">
+  <?php if($select_id == $area["id"]): ?>
+    <option value='{$area.id}' selected="selected">{$area.name}</option>
+  <?php else: ?>
+    <option value='{$area.id}'>{$area.name}</option>
+  <?php endif; ?>
+</volist>
