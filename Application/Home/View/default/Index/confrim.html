@@ -27,33 +27,33 @@
                                        name="consignee">
                             </div>
                         </div>
+
                         <div class="control-group" style="margin-top:39px;">
                             <label class="confrim_label">收货人地址</label>
-                            <div class="controls" style="margin-left: 35%;">
-                                <div class="toggle-{$field.name}"
-                                     style="width: 110px;float: left;border: 1px solid #717574;">
+
+                            <div class="controls" style="width:550px;margin:0 auto;padding-left: 43px;">
+                                <div class="toggle-{$field.name}" style="width: 110px;float: left;border: 1px solid #717574;">
                                     <select data-toggle="select" class="form-control" name="province_id" id="province_id"
-                                            style="height: 44px; margin-right: 8px;"
+                                            style="height: 43px; margin-right: 8px;"
                                             child="city_id,state_id" onchange="areaChangeCallback(this);">
                                         <option value="">请选择省</option>
                                     </select>
                                 </div>
-                                <div class="form-item cf toggle-{$field.name}"
-                                     style="width: 110px;float: left;border: 1px solid #717574; margin-right: 5px; margin-left: 5px;">
+                                <div class="form-item cf toggle-{$field.name}" style="width: 110px;float: left;border: 1px solid #717574; margin-right: 5px; margin-left: 5px;">
                                     <select data-toggle="select" class="form-control" name="city_id" child="state_id"
-                                            style="height: 44px;" parent="province_id" onchange="areaChangeCallback(this);" id="city_id">
+                                            style="height: 43px;" parent="province_id" onchange="areaChangeCallback(this);" id="city_id">
                                         <option value="">请选择城市</option>
                                     </select>
                                 </div>
                                 <div class="form-item cf toggle-{$field.name}"
                                      style="width: 110px;border: 1px solid #717574; float: left">
                                     <select data-toggle="select" class="form-control" name="state_id" parent="city_id"
-                                            style="height: 44px;" id="state_id">
+                                            style="height: 43px;" id="state_id">
                                         <option value="">区/县</option>
                                     </select>
 
                                 </div>
-                                <span style="margin-right: 48%">
+                                <span style="">
                                     <input type="text" id="address" class="" value=""
                                            style="border: 1px solid #717574; height: 44px" name="address">
                                 </span>
