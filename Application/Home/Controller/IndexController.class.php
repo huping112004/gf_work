@@ -56,11 +56,11 @@ class IndexController extends BaseController
         try {
             $result = D('Product')->chekStock($product_id,$user_id);
 
-        }catch(Exception $e){
-            $result = [
+        }catch(\Exception $e){
+            $result = array(
                 'msg_code'=>'1001',
                 'msg'=>$e->getMessage()
-            ];
+            );
         }
 
         $this->ajaxReturn($result);
@@ -84,10 +84,10 @@ class IndexController extends BaseController
 
         }else{
 
-            $result = [
+            $result = array(
                 'msg_code'=>'4000',
                 'msg'=>'手机号码格式错误'
-            ];
+            );
             $this->ajaxReturn($result);
         }
         try {
@@ -95,18 +95,18 @@ class IndexController extends BaseController
             if($result['msg_code'] ==200){//检验成功
                $order_id = D('Order')->saveOrder($param,$user_id);
                if($order_id){
-                   $result = [
+                   $result = array(
                        'msg_code'=>'200',
                        'msg'=>'success'
-                   ];
+                   );
                }
             }
 
         }catch(\Exception $e){
-            $result = [
+            $result = array(
                 'msg_code'=>'4000',
                 'msg'=>$e->getMessage()
-            ];
+            );
             print_r($result);
         }
 

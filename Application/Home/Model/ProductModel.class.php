@@ -29,23 +29,23 @@ class ProductModel extends Model
         }
         if (($product['stock'] - $product['locks']) <= 0) {
             if ($product_id == 1) {//套餐A
-               $result = [
+               $result = array(
                    'msg_code'=>'1001',
                    'msg'=>'a-finsh'
-               ];
+               );
             }else{////套餐B
-                $result = [
+                $result = array(
                     'msg_code'=>'1002',
                     'msg'=>'b-finsh'
-                ];
+                );
             }
         }
         $order = M("order")->where(['product_id'=>$product_id,'user_id'=>$user_id])->find();
         if($order){
-            $result = [
+            $result = array(
                 'msg_code'=>'1003',
                 'msg'=>'recive2'
-            ];
+            );
         }
         return $result;
 
