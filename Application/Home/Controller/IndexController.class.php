@@ -54,7 +54,7 @@ class IndexController extends BaseController
             throw new \Exception('参数错误');
         }
         try {
-            $result = (new \Home\Model\ProductModel)->chekStock($product_id,$user_id);
+            $result = D('Product')->chekStock($product_id,$user_id);
 
         }catch(Exception $e){
             $result = [
@@ -91,9 +91,9 @@ class IndexController extends BaseController
             $this->ajaxReturn($result);
         }
         try {
-            $result = (new \Home\Model\ProductModel)->chekStock($product_id,$user_id);
+            $result = D('Product')->chekStock($product_id,$user_id);
             if($result['msg_code'] ==200){//检验成功
-               $order_id = (new \Home\Model\OrderModel())->saveOrder($param,$user_id);
+               $order_id = D('Order')->saveOrder($param,$user_id);
                if($order_id){
                    $result = [
                        'msg_code'=>'200',
