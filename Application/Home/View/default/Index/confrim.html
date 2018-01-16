@@ -32,16 +32,20 @@
                             <label class="confrim_label">收货人地址</label>
 
                             <div class="controls" style="width:550px;margin:0 auto;padding-left: 43px;">
-                                <div class="toggle-{$field.name}" style="width: 110px;float: left;border: 1px solid #717574;">
-                                    <select data-toggle="select" class="form-control" name="province_id" id="province_id"
+                                <div class="toggle-{$field.name}"
+                                     style="width: 110px;float: left;border: 1px solid #717574;">
+                                    <select data-toggle="select" class="form-control" name="province_id"
+                                            id="province_id"
                                             style="height: 43px; margin-right: 8px;"
                                             child="city_id,state_id" onchange="areaChangeCallback(this);">
                                         <option value="">请选择省</option>
                                     </select>
                                 </div>
-                                <div class="form-item cf toggle-{$field.name}" style="width: 110px;float: left;border: 1px solid #717574; margin-right: 5px; margin-left: 5px;">
+                                <div class="form-item cf toggle-{$field.name}"
+                                     style="width: 110px;float: left;border: 1px solid #717574; margin-right: 5px; margin-left: 5px;">
                                     <select data-toggle="select" class="form-control" name="city_id" child="state_id"
-                                            style="height: 43px;" parent="province_id" onchange="areaChangeCallback(this);" id="city_id">
+                                            style="height: 43px;" parent="province_id"
+                                            onchange="areaChangeCallback(this);" id="city_id">
                                         <option value="">请选择城市</option>
                                     </select>
                                 </div>
@@ -85,7 +89,8 @@
 
                         </div>
                 </div>
-                <input type="hidden" id="product_id" class="span3 confrim_input" placeholder="" value="{$product_id}" name="product_id">
+                <input type="hidden" id="product_id" class="span3 confrim_input" placeholder="" value="{$product_id}"
+                       name="product_id">
                 </form>
             </div>
 
@@ -97,17 +102,17 @@
     </div>
     <include file="Public/popdiv"/>
     <div id="confrim_info" style="display: none">
-        <div style="width:500px;margin:0 auto;height: 400px;padding-top: 60px;padding-left: 60px" >
-            <div class="controls" >
+        <div style="width:500px;margin:0 auto;height: 400px;padding-top: 60px;padding-left: 60px">
+            <div class="controls">
                 <img src="__LAYOUT_STATIC__/images/confrim_pop.jpg">
             </div>
             <div class="controls" style="width: 360px; height: 165px;border: 1px solid #ce0201;margin-bottom:20px; ">
                 <div class="control-group" style="margin-left: 9px; margin-top: 20px;">
-                    <label class="confrim_text" >*收货人：</label>
+                    <label class="confrim_text">*收货人：</label>
                     <span id="confrim_consignee">张大大</span>
                 </div>
                 <div class="control-group" style="margin-left: 9px;margin-top: 10px; ">
-                    <label class="confrim_text" >*联系方式：</label>
+                    <label class="confrim_text">*联系方式：</label>
                     <span id="confrim_moblie">13564608859</span>
                 </div>
                 <div class="control-group" style="margin-left: 9px; margin-top: 10px;">
@@ -116,13 +121,12 @@
                 </div>
             </div>
             <div class="control-group" style="margin:0 auto;">
-                <div style="float: left;margin-left: 80px;margin-right: 20px;">
+
+                <div style="margin-left: 120px; <php> if(!empty($order)){ echo 'display:none'; }</php>" id="submit_button">
 
                     <button class="button" onclick="save()">确认提交</button>
                 </div>
-                <div class="controls">
-                    <button class="button" onclick="closeBox()">返回上一页</button>
-                </div>
+
             </div>
 
         </div>
@@ -138,26 +142,56 @@
             });
 
         function confrim() {
-            if($("#consignee").val()==''){
+
+            if ($("#consignee").val() == '') {
                 alert('请填写收货人');
                 return false;
             }
-            if($("#address").val()==''){
+            if ($("#address").val() == '') {
                 alert('请填写地址');
                 return false;
             }
-            if($("#mobile").val()==''){
+            if ($("#mobile").val() == '') {
                 alert('请填写联系方式');
                 return false;
             }
+            var reg = new RegExp(/^1\d{10}$/);
+            if(!reg.test($("#mobile").val())) {
+                alert("手机号格式错误!");
+                return false;
+            }
 
-            $("#confrim_consignee").html($("#consignee").val());
-            $("#confrim_moblie").html($("#mobile").val());
-            var province =  $("#province_id").find("option:selected").text();
-            var city =  $("#city_id").find("option:selected").text();
-            var state =  $("#state_id").find("option:selected").text();
-            var address =  $("#address").val();
-            $("#confrim_address").html(province+city+state+address);
+            $.ajax({
+                //提交数据的类型 POST GET
+                type: "post",
+                //提交的网址
+                // url: '__APP__/Index/saveOrder',
+                url: "{:U('Index/checkOrder')}",
+                //提交的数据
+                data: {
+                    product_id: $("#product_id").val(),
+                },
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                //成功返回之后调用的函数
+                success: function (data) {
+                    //领取过。提交按钮隐藏
+                    if (data.msg ==1) {
+                        $("#submit_button").hide();
+                    }
+                    $("#confrim_consignee").html($("#consignee").val());
+                    var province = $("#province_id").find("option:selected").text();
+                    var city = $("#city_id").find("option:selected").text();
+                    var state = $("#state_id").find("option:selected").text();
+                    var address = $("#address").val();
+                    $("#confrim_address").html(province + city + state + address);
+                    $("#confrim_moblie").html($("#mobile").val());
+                }
+            });
+
+            //alert($("#consignee").val());
+
+
             $("#result_image").html($("#confrim_info").html());
             var popBox = document.getElementById('popBox');
             var popLayer = document.getElementById('popLayer');
@@ -176,9 +210,18 @@
                 //提交数据的类型 POST GET
                 type: "post",
                 //提交的网址
-                url: '__APP__/Index/saveOrder',
+                // url: '__APP__/Index/saveOrder',
+                url: "{:U('Index/saveOrder')}",
                 //提交的数据
-                data: {product_id: $("#product_id").val(),consignee:$("#consignee").val(),mobile:$("#mobile").val(),address:$("#address").val(),province:$("#province_id").find("option:selected").text(),city:$("#city_id").find("option:selected").text(),state:$("#state_id").find("option:selected").text()},
+                data: {
+                    product_id: $("#product_id").val(),
+                    consignee: $("#consignee").val(),
+                    mobile: $("#mobile").val(),
+                    address: $("#address").val(),
+                    province: $("#province_id").find("option:selected").text(),
+                    city: $("#city_id").find("option:selected").text(),
+                    state: $("#state_id").find("option:selected").text()
+                },
                 //返回数据的格式
                 datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
                 //成功返回之后调用的函数
@@ -215,9 +258,13 @@
             cursor: pointer;
         }
     </style>
-    <script src="/Public/layouts/js/area_select.js"></script>
+    <script>
+        var city_url = "{:U('Area/index')}";
+    </script>
+    <script src="__LAYOUT_STATIC__/js/area_select.js"></script>
     <script type="text/javascript">
         $(function () {
+
             createAreaSelect('province_id', 0, 0);
 
         });

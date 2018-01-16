@@ -98,7 +98,8 @@
                     if(data.msg_code!=200){
                         popBox("__LAYOUT_STATIC__/images/"+data.msg_en+".jpg");
                     }else{
-                        location.href="__APP__/Index/index";
+                        //location.href="__APP__/Index/index";
+                        location.href="{:U('Index/index')}";
                     }
                 }
             });

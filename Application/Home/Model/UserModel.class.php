@@ -22,7 +22,7 @@ class UserModel extends Model
         $id_card = $param['id_card'];
 
         $result = array();
-        $user = M('user')->where(['job_number' => $job_number])->find();
+        $user = M('user')->where(array('job_number' => $job_number))->find();
         if (empty($user)) {
             $result = array(
                 'msg_code' => '1001',
@@ -35,14 +35,14 @@ class UserModel extends Model
 
         } else {
 
-            $result = [
+            $result = array(
                 'msg_code' => '1002',
                 'msg' => '您输入的手机号码不正确',
                 'msg_en' => 'mobile'
-            ];
+            );
             return $result;
         }
-        $user = M('user')->where(['mobile' => $mobile])->find();
+        $user = M('user')->where(array('mobile' => $mobile))->find();
         if (empty($user)) {
             $result = array(
                 'msg_code' => '1002',
@@ -51,7 +51,7 @@ class UserModel extends Model
             );
             return $result;
         }
-        $user = M('user')->where(['id_card' => $id_card])->find();
+        $user = M('user')->where(array('id_card' => $id_card))->find();
         if (empty($user)) {
             $result = array(
                 'msg_code' => '1003',
@@ -60,7 +60,7 @@ class UserModel extends Model
             );
             return $result;
         }
-        $user = M('user')->where(['job_number' => $job_number, 'mobile' => $mobile, 'id_card' => $id_card])->find();
+        $user = M('user')->where(array('job_number' => $job_number, 'mobile' => $mobile, 'id_card' => $id_card))->find();
         if (empty($user)) {
             $result = array(
                 'msg_code' => '1004',

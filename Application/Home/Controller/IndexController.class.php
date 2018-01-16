@@ -41,6 +41,9 @@ class IndexController extends BaseController
         $seo["title"] = '平安人寿广分订单确认';
         $seo["description"] = '平安人寿广分订单确认';
         $seo["keyword"] = '平安人寿广分订单确认';
+        $user_id = is_login();
+        $order = M("order")->where(array('user_id'=>$user_id))->find();
+        $this->assign("order", $order);
         $this->assign("SEO", $seo);
         $this->assign("product_id", $product_id);
         $this->display();
@@ -114,5 +117,24 @@ class IndexController extends BaseController
 
     }
 
+    public function checkOrder()
+    {
+        $param = $_POST;
+        $user_id = is_login();
+        $order = M("order")->where(array('user_id'=>$user_id))->find();
+        if($order){//领取过
+            $result = array(
+                'msg_code'=>'200',
+                'msg'=>1
+            );
+        }else{
+            $result = array(
+                'msg_code'=>'200',
+                'msg'=>0
+            );
+        }
 
+        $this->ajaxReturn($result);
+
+    }
 }

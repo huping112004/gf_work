@@ -19,11 +19,11 @@ class ProductModel extends Model
     public function chekStock($product_id,$user_id)
     {
         $product_id = abs($product_id);
-        $result = [
+        $result = array(
             'msg_code'=>'200',
             'msg'=>'ok'
-        ];
-        $product = M('product')->where(['id' => $product_id])->find();
+        );
+        $product = M('product')->where(array('id' => $product_id))->find();
         if (empty($product)) {
             throw new \ErrorException('选择的套餐不存在');
         }
@@ -40,7 +40,7 @@ class ProductModel extends Model
                 );
             }
         }
-        $order = M("order")->where(['product_id'=>$product_id,'user_id'=>$user_id])->find();
+        $order = M("order")->where(array('user_id'=>$user_id))->find();
         if($order){
             $result = array(
                 'msg_code'=>'1003',

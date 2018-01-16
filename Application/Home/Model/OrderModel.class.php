@@ -21,7 +21,7 @@ class OrderModel extends Model
         $product_id = abs($params['product_id']);
         $order = M('Order');
         $order->startTrans();
-        $info = [
+        $info = array(
             'product_id' => $product_id,
             'user_id' => $user_id,
             'consignee' => $params['consignee'],
@@ -30,12 +30,12 @@ class OrderModel extends Model
             'province' => $params['province'],
             'city' => $params['city'],
             'state' => $params['states'],
-            'create_time' => time(),
-            'update_time' => time(),
-        ];
+            'create_time' => date('Y-m-d H:i:s'),
+            'update_time' => date('Y-m-d H:i:s'),
+        );
         $order_id = M('Order')->add($info);
         $data['locks'] =array('exp','locks+1');
-        $result = M("product")->where(['id' => $product_id])->save($data);
+        $result = M("product")->where(array('id' => $product_id))->save($data);
         if($order_id&&$result){
             $order->commit();
             return $order_id;

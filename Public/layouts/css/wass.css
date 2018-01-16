@@ -92,7 +92,7 @@ ul {
     left: 0;
     top: 0;
     z-index: 10;
-    background: #DCDBDC;
+    background: #000000;
     -moz-opacity: 0.8;
     opacity: .80;
     filter: alpha(opacity=80); /* 只支持IE6、7、8、9 */

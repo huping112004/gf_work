@@ -75,7 +75,8 @@
                 //提交数据的类型 POST GET
                 type: "post",
                 //提交的网址
-                url: '__APP__/Index/chekStock',
+               // url: '__APP__/Index/chekStock',
+                url:"{:U('Index/chekStock')}",
                 //提交的数据
                 data: {product_id: product_id},
                 //返回数据的格式
@@ -85,7 +86,8 @@
                     if (data.msg_code == 1001 || data.msg_code == 1002 || data.msg_code == 1003) {
                         popBox("__LAYOUT_STATIC__/images/" + data.msg + ".jpg");
                     } else if (data.msg_code == 200) {
-                        location.href = "__APP__/Index/confrim/product_id/" + product_id;
+                       location.href = "__APP__/Home/Index/confrim/product_id/" + product_id;
+                        //location.href="{:U('Index/confrim?')}/product_id/"+product_id;
                     }
                     else {
                         alert(data.msg);
