@@ -31,7 +31,7 @@ class BaseController extends Controller {
 	/* 用户登录检测 */
 	protected function login(){
 		/* 用户登录检测 */
-		$user_id = is_login();
+		$user_id = is_user_login();
 		if(empty($user_id))
         {
             $this->redirect('User/login');

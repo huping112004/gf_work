@@ -49,7 +49,7 @@ class PublicController extends \Think\Controller {
                 $this->error($error);
             }
         } else {
-            if(is_login()){
+            if(is_admin_login()){
                 $this->redirect('Index/index');
             }else{
                 /* 读取数据库中的配置 */

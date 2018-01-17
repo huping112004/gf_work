@@ -69,7 +69,9 @@ class UserModel extends Model
             );
             return $result;
         } else {//登录成功
-            session('user_id', $user['id']);
+            //session('user_id', $user['id']);
+            //session('user_id', $user['id']);
+            cookie('user_id', $user['id'], 3600*30*24);
             session('job_number', $user['job_number']);
             $result = array(
                 'msg_code' => '200',

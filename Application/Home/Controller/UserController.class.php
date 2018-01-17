@@ -72,7 +72,7 @@ class UserController extends HomeController {
 
 	/* 退出登录 */
 	public function logout(){
-		if(is_login()){
+		if(is_user_login()){
 			D('Member')->logout();
 			$this->success('退出成功！', U('User/login'));
 		} else {

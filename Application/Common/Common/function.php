@@ -22,14 +22,29 @@ const ONETHINK_ADDON_PATH = './Addons/';
  * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
 function is_login(){
-    $user_id = session('user_id');
+    $user = session('user_auth');
+    if (empty($user)) {
+        return 0;
+    } else {
+        return session('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+    }
+}
+function is_user_login(){
+    $user_id = cookie('user_id');
     if (empty($user_id)) {
         return 0;
     } else {
         return $user_id;
     }
 }
-
+function is_admin_login(){
+    $user = session('user_auth');
+    if (empty($user)) {
+        return 0;
+    } else {
+        return session('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+    }
+}
 /**
  * 检测当前用户是否为管理员
  * @return boolean true-管理员，false-非管理员

@@ -41,7 +41,7 @@ class IndexController extends BaseController
         $seo["title"] = '平安人寿广分订单确认';
         $seo["description"] = '平安人寿广分订单确认';
         $seo["keyword"] = '平安人寿广分订单确认';
-        $user_id = is_login();
+        $user_id = is_user_login();
         $order = M("order")->where(array('user_id'=>$user_id))->find();
         $this->assign("order", $order);
         $this->assign("SEO", $seo);
@@ -52,7 +52,7 @@ class IndexController extends BaseController
     {
         $param = $_POST;
         $product_id = $param['product_id'];
-        $user_id = is_login();
+        $user_id = is_user_login();
         if(empty($product_id)){
             throw new \Exception('参数错误');
         }
@@ -79,7 +79,7 @@ class IndexController extends BaseController
         $param = $_POST;
 
         $product_id = $param['product_id'];
-        $user_id = is_login();
+        $user_id = is_user_login();
         if(empty($product_id)){
             throw new \Exception('参数错误');
         }
@@ -120,7 +120,7 @@ class IndexController extends BaseController
     public function checkOrder()
     {
         $param = $_POST;
-        $user_id = is_login();
+        $user_id = is_user_login();
         $order = M("order")->where(array('user_id'=>$user_id))->find();
         if($order){//领取过
             $result = array(
