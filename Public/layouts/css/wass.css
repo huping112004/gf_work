@@ -118,5 +118,21 @@ ul {
     color: #ce0201;
     font: bold;
 }
+#orderOk {
+    position: absolute;
+    display: none;
+    width: 500px;
+    height: 400px;
+    left: 40%;
+    top: 50%;
+    z-index: 11;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    background: #fffff;
+}
 
 /*# sourceMappingURL=wass.css.map */

@@ -51,5 +51,21 @@ class ProductModel extends Model
 
     }
 
+    /**
+     * 获取商品库存
+     */
+    public function getProductStock(){
+        $row = array();
+        $product = M('product')->select();
+        if($product){
+            foreach ($product as $item){
+                $left_stock = $item['stock']-$item['locks'];
+                $item['left_stock'] = $left_stock;
+                $row[$item['id']] = $item;
+            }
+        }
+        return $row;
+    }
+
 
 }

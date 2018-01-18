@@ -25,7 +25,7 @@
         <!-- /Logo -->
 
         <!-- 主导航 -->
-        <ul class="main-nav">
+        <ul class="main-nav" style="display: none">
             <volist name="__MENU__.main" id="menu">
                 <li class="{$menu.class|default=''}"><a href="{$menu.url|U}">{$menu.title}</a></li>
             </volist>
@@ -51,6 +51,13 @@
         <block name="sidebar">
            
             <div id="subnav" class="subnav">
+                <ul class="side-sub-menu">
+                    <volist name="sub_menu" id="menu">
+                        <li>
+                            <a class="item" href="{$menu.url|U}">订单列表</a>
+                        </li>
+                    </volist>
+                </ul>
                 <notempty name="_extra_menu">
                     {// 动态扩展菜单 //}
                     {:extra_menu($_extra_menu,$__MENU__)}

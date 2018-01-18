@@ -16,6 +16,9 @@ namespace Admin\Controller;
 class AddonsController extends AdminController {
 
     public function _initialize(){
+        print_r(array(
+            '已装插件后台'=> D('Addons')->getAdminList(),
+        ));
         $this->assign('_extra_menu',array(
             '已装插件后台'=> D('Addons')->getAdminList(),
         ));

@@ -29,7 +29,7 @@ class OrderModel extends Model
             'address' => $params['address'],
             'province' => $params['province'],
             'city' => $params['city'],
-            'state' => $params['states'],
+            'state' => $params['state'],
             'create_time' => date('Y-m-d H:i:s'),
             'update_time' => date('Y-m-d H:i:s'),
         );

@@ -24,7 +24,7 @@ class IndexController extends AdminController {
         // $this->meta_title = '管理首页';
         // $this->display();
        // $this->redirect('Article/index/cate_id/2');
-        $this->redirect('Article/mydocument');
+        $this->redirect('Order/index');
         //$this->redirect(U('Admin/article/index',array("cate_id"=>2)));
     }
 

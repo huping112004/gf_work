@@ -27,6 +27,13 @@ class IndexController extends BaseController
         $seo["description"] = '平安人寿广分套餐领取';
         $seo["keyword"] = '平安人寿广分套餐领取';
         $this->assign("SEO", $seo);
+        $stocks = D('Product')->getProductStock();
+
+        $product_stock_1 = isset($stocks[1])?$stocks[1]['left_stock']:0;
+        $product_stock_2 = isset($stocks[2])?$stocks[2]['left_stock']:0;
+
+        $this->assign("product_stock_1", $product_stock_1);
+        $this->assign("product_stock_2", $product_stock_2);
         $this->display();
     }
 

@@ -26,9 +26,15 @@
                                 <img src="__LAYOUT_STATIC__/images/bao1.jpg">
                             </div>
                             <div class="controls">
+                                <php> if($product_stock_1>0){</php>
                                 <a href="javascript:void(0)" onclick="getTaocan(1)">
                                     <img src="__LAYOUT_STATIC__/images/tao-button.jpg">
                                 </a>
+                                <php>}else{</php>
+                                <a href="javascript:void(0)" >
+                                    <img src="__LAYOUT_STATIC__/images/not_kuchen.jpg">
+                                </a>
+                                <php>}</php>
                             </div>
                         </div>
                         <div class="control-group">
@@ -44,9 +50,15 @@
                         </div>
                         <div class="controls" style="margin-bottom: 150px;">
 
+                            <php> if($product_stock_2>0){</php>
                             <a href="javascript:void(0)" onclick="getTaocan(2)">
                                 <img src="__LAYOUT_STATIC__/images/tao-button.jpg">
                             </a>
+                            <php>}else{</php>
+                            <a href="javascript:void(0)" >
+                                <img src="__LAYOUT_STATIC__/images/not_kuchen.jpg">
+                            </a>
+                            <php>}</php>
                         </div>
                     </form>
                 </div>
@@ -75,8 +87,8 @@
                 //提交数据的类型 POST GET
                 type: "post",
                 //提交的网址
-               // url: '__APP__/Index/chekStock',
-                url:"{:U('Index/chekStock')}",
+                // url: '__APP__/Index/chekStock',
+                url: "{:U('Index/chekStock')}",
                 //提交的数据
                 data: {product_id: product_id},
                 //返回数据的格式
@@ -86,7 +98,7 @@
                     if (data.msg_code == 1001 || data.msg_code == 1002 || data.msg_code == 1003) {
                         popBox("__LAYOUT_STATIC__/images/" + data.msg + ".jpg");
                     } else if (data.msg_code == 200) {
-                       location.href = "__APP__/Home/Index/confrim/product_id/" + product_id;
+                        location.href = "__APP__/Home/Index/confrim/product_id/" + product_id;
                         //location.href="{:U('Index/confrim?')}/product_id/"+product_id;
                     }
                     else {
